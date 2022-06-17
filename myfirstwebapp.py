@@ -10,7 +10,11 @@ def index():
 
 @app.route('/requirements/')
 def requirements():
-    return redirect(url_for('static', filename='requirements.txt'))
+    result = {}
+    with open("requirements.txt", encoding='utf-8') as f:
+        for element in f.readlines():
+            result[element.replace('\n', '')] = ''
+    return result
 
 @app.route('/generate-users/int<count>')
 def generate_users(count):

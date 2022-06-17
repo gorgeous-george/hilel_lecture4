@@ -3,6 +3,7 @@ Hello, this is my first web app. Cool, huh?
 try to run the following links:
 
 http://127.0.0.1:5000/requirements/
+http://127.0.0.1:5000/generate-users/
 http://127.0.0.1:5000/generate-users/?count=100
 http://127.0.0.1:5000/mean/
 http://127.0.0.1:5000/space/

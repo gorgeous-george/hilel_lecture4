@@ -2,6 +2,7 @@ from flask import Flask, request, url_for, redirect, jsonify
 from faker import Faker
 import requests
 import csv
+from datetime import date
 
 app = Flask(__name__)
 fake = Faker()
@@ -51,4 +52,7 @@ def average():
 
 @app.route('/space/')
 def space():
-    return 'number of astronauts'
+    r = requests.get('http://api.open-notify.org/astros.json')
+    result = r.json()["number"]
+    today = date.today()
+    return f'as of {today} there are <b>{result}</b> astronauts at Earth orbit'

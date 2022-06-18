@@ -4,7 +4,10 @@ import requests
 import csv
 from datetime import date
 
-app = Flask(__name__)
+app = Flask(__name__,
+            static_url_path='',
+            static_folder='flaskr/static',
+            template_folder='flaskr/templates')
 fake = Faker()
 
 
@@ -36,7 +39,7 @@ def generate_users():
 @app.route('/mean/')
 def average():
     result = {}
-    with open('static/hw.csv') as csvfile:
+    with open('flaskr/static/hw.csv') as csvfile:
         reader = csv.DictReader(csvfile, delimiter=',')
         h_sum = 0
         w_sum = 0

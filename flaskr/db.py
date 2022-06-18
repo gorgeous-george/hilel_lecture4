@@ -29,6 +29,11 @@ def init_db():
         db.executescript(f.read().decode('utf8'))
 
 
+def fill_db():
+    db = get_db()
+    with current_app.open_resource('fixture.sql') as f:
+        db.executescript(f.read().decode('utf8'))
+
 @click.command('init-db')
 @with_appcontext
 def init_db_command():
@@ -37,7 +42,15 @@ def init_db_command():
     click.echo('Initialized the database.')
 
 
+@click.command('fill-db')
+@with_appcontext
+def fill_db_command():
+    """Clear the existing data and create new tables."""
+    fill_db()
+    click.echo('Filling the database.')
+
 def init_app(app):
     app.teardown_appcontext(close_db)
     app.cli.add_command(init_db_command)
+    app.cli.add_command(fill_db_command)
 

@@ -39,7 +39,11 @@ def create_app(test_config=None):
 
     @app.route('/tracks/')
     def tracks():
-        return render_template('tracks_count.html')
+        db = get_db()
+        tracks_count = db.execute(
+            'SELECT COUNT ( id ) FROM tracks;'
+        ).fetchone()[0]
+        return render_template('tracks_count.html', tracks_count=tracks_count)
 
     @app.route('/tracks/', methods=['GET'])
     def tracks_genre():

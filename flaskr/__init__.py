@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request
+from flask import Flask, render_template
 from flaskr.db import get_db
 
 
@@ -45,10 +45,14 @@ def create_app(test_config=None):
         ).fetchone()
         return render_template('tracks_count.html', tracks_count=tracks_count)
 
-    @app.route('/tracks/', methods=['GET'])
-    def tracks_genre():
-        genre = request.args.get('genre', type=str)
-        return render_template('that_genre_tracks_count.html', genre=genre)
+    @app.route('/tracks/<string:genre>')
+    def tracks_genre(genre):
+        db = get_db()
+        that_genre_count = db.execute(
+            'SELECT COUNT(id) FROM tracks WHERE genre = ?',
+            (genre,)
+        ).fetchone()
+        return render_template('that_genre_tracks_count.html', that_genre_count=that_genre_count)
 
     @app.route('/tracks-sec/')
     def tracks_sec():

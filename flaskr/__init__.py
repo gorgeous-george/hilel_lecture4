@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flaskr.db import get_db
 
 
@@ -34,7 +34,7 @@ def create_app(test_config=None):
         db = get_db()
         artist_count = db.execute(
             'SELECT COUNT ( DISTINCT artist ) FROM tracks;'
-        ).fetchone()[0]
+        ).fetchone()
         return render_template('artist_count.html', artist_count=artist_count)
 
     @app.route('/tracks/')
@@ -42,20 +42,29 @@ def create_app(test_config=None):
         db = get_db()
         tracks_count = db.execute(
             'SELECT COUNT ( id ) FROM tracks;'
-        ).fetchone()[0]
+        ).fetchone()
         return render_template('tracks_count.html', tracks_count=tracks_count)
 
     @app.route('/tracks/', methods=['GET'])
     def tracks_genre():
-        return render_template('that_genre_tracks_count.html')
+        genre = request.args.get('genre', type=str)
+        return render_template('that_genre_tracks_count.html', genre=genre)
 
     @app.route('/tracks-sec/')
     def tracks_sec():
-        return render_template('all_tracks_titles_and_their_duration.html')
+        db = get_db()
+        tracks_titles_duration = db.execute(
+            'SELECT title, duration FROM tracks;'
+        ).fetchall()
+        return render_template('all_tracks_titles_and_their_duration.html', tracks_titles_duration=tracks_titles_duration)
 
     @app.route('/tracks-sec/statistics/')
     def tracks_sec_stat():
-        return render_template('average_duration_and_total_sum_of_duration.html')
+        db = get_db()
+        average_sum = db.execute(
+            'SELECT AVG(duration), SUM(duration) FROM tracks;'
+        ).fetchall()
+        return render_template('average_duration_and_total_sum_of_duration.html', average_sum=average_sum)
 
     from . import db
     db.init_app(app)

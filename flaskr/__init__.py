@@ -1,6 +1,6 @@
 import os
-
-from flask import Flask
+from flask import Flask, render_template
+from flaskr.db import get_db
 
 
 def create_app(test_config=None):
@@ -25,9 +25,33 @@ def create_app(test_config=None):
         pass
 
     # a simple page that says hello
-    @app.route('/hello')
+    @app.route('/hello/')
     def hello():
-        return 'hello this is music box'
+        return render_template('hello.html')
+
+    @app.route('/names/')
+    def names():
+        db = get_db()
+        artist_count = db.execute(
+            'SELECT COUNT ( DISTINCT artist ) FROM tracks;'
+        ).fetchone()[0]
+        return render_template('artist_count.html', artist_count=artist_count)
+
+    @app.route('/tracks/')
+    def tracks():
+        return render_template('tracks_count.html')
+
+    @app.route('/tracks/', methods=['GET'])
+    def tracks_genre():
+        return render_template('that_genre_tracks_count.html')
+
+    @app.route('/tracks-sec/')
+    def tracks_sec():
+        return render_template('all_tracks_titles_and_their_duration.html')
+
+    @app.route('/tracks-sec/statistics/')
+    def tracks_sec_stat():
+        return render_template('average_duration_and_total_sum_of_duration.html')
 
     from . import db
     db.init_app(app)

@@ -1,0 +1,13 @@
+{% extends 'hello.html' %}
+
+{% block header %}
+  <h1>{% block title %}That genre tracks count{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <label for="genre">Genre</label>
+    <input name="genre" id="genre" required>
+    <input type="submit" value="genre">
+  </form>
+{% endblock %}

@@ -37,21 +37,21 @@ def create_app(test_config=None):
         ).fetchone()
         return render_template('artist_count.html', artist_count=artist_count)
 
-    # @app.route('/tracks/')
-    # def tracks():
-    #     db = get_db()
-    #     tracks_count = db.execute(
-    #         'SELECT COUNT ( id ) FROM tracks;'
-    #     ).fetchone()
-    #     return render_template('tracks_count.html', tracks_count=tracks_count)
+    @app.route('/tracks/')
+    def tracks():
+        db = get_db()
+        tracks_count = db.execute(
+            'SELECT COUNT ( id ) FROM tracks;'
+        ).fetchone()
+        return render_template('tracks_count.html', tracks_count=tracks_count)
 
-    @app.route('/tracks/<genre>', methods=['GET'])
+    @app.route('/tracks/<string:genre>')
     def tracks_genre(genre):
         db = get_db()
         that_genre_count = db.execute(
             'SELECT COUNT(id) FROM tracks WHERE genre = ?',
             (genre,)
-        )
+        ).fetchone()
         return render_template('that_genre_tracks_count.html', that_genre_count=that_genre_count)
 
     @app.route('/tracks-sec/')

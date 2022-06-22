@@ -10,7 +10,7 @@
           <li><a href="{{ url_for('hello') }}">this page</a></li>
           <li><a href="{{ url_for('names') }}">количество уникальных исполнителей (artist) из таблицы tracks.</a></li>
           <li><a href="{{ url_for('tracks') }}">количество записей из таблицы tracks.</a></li>
-          <li><a href="{{ url_for('tracks_genre') }}">принимать название жанра трека и выводить количество записей этого жанра (genre) из таблицы tracks.</a></li>
+          <li><a href="{{ url_for('tracks', genre='Synth-pop') }}">принимать название жанра трека и выводить количество записей этого жанра (genre) из таблицы tracks.</a></li>
           <li><a href="{{ url_for('tracks_sec') }}">выводить все названия треков (title) и соответствующую продолжительность трека в секундах (length) из таблицы tracks.</a></li>
           <li><a href="{{ url_for('tracks_sec_stat') }}">выводить среднюю продолжительность трека и общую продолжительность всех треков в секундах из таблицы tracks.</a></li>
         </ul>

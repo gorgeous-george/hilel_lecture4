@@ -1,0 +1,10 @@
+{% extends 'hello.html' %}
+
+{% block header %}
+  <h1>{% block title %}Tracks Count{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <h1>{{ tracks_count[0] }}</h1>
+{% endblock %}
+

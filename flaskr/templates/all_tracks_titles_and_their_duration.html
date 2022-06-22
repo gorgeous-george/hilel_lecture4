@@ -1,0 +1,11 @@
+{% extends 'hello.html' %}
+
+{% block header %}
+  <h1>{% block title %}All tracks and their duration (sec){% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    {% for line in tracks_titles_duration %}
+    <h1>{{ line[0], line[1] }}</h1>
+    {% endfor %}
+{% endblock %}

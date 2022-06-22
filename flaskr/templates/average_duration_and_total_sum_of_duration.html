@@ -1,0 +1,11 @@
+{% extends 'hello.html' %}
+
+{% block header %}
+  <h1>{% block title %}Average track duration and total length of all tracks{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    {% for line in average_sum %}
+    <h1>{{ line[0], line[1] }}</h1>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends 'hello.html' %}
+
+{% block header %}
+  <h1>{% block title %}That genre tracks count{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <h1>{{ that_genre_count.fetchone() }}</h1>
+{% endblock %}
